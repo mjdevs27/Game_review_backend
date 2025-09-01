@@ -9,17 +9,23 @@ dotenv.config();
 
 
 const resolvers = {
-    games(){
-        return _db.games
-    },
-    reviews(){
-        return _db.reviews
-    },
-    authors(){
-        return _db.authors
-    }
+    Query:{
+        games(){
+            return _db.games
+            },
+        reviews(){
+            return _db.reviews
+            },
+        authors(){
+            return _db.authors
+            },
+        review(_ , args){
+            return _db.reviews.find((review)=>{
+                return review.id === args.id
+            })
+            }
 }
-
+}
 const server = new ApolloServer({
     typeDefs,
     resolvers
@@ -29,5 +35,6 @@ const port = process.env.PORT
 const { url } = await startStandaloneServer(server , {
     listen : {port : port}
 })
+
 
 console.log("Server connected at" ,  port  , url)
