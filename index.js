@@ -23,8 +23,36 @@ const resolvers = {
             return _db.reviews.find((review)=>{
                 return review.id === args.id
             })
-            }
-}
+        },
+        game(_ , args){
+            return _db.games.find((game)=>{
+                return game.id === args.id
+            })
+        },
+        author(_ , args){
+            return _db.authors.find((author)=>{
+                return author.id === args.id
+            })
+        }
+    },
+    Game : {
+        reviews (parent) {
+            return _db.reviews.filter((review)=>parent.id === review.game_id)
+        }
+    },
+    Author : {
+        reviews (parent) {
+            return _db.reviews.filter((review)=>parent.id === review.author_id)
+        }
+    },
+    Review :{
+        games(parent){
+            return _db.games.find((game)=>game.id === parent.game_id)
+        },
+        author(parent){
+            return _db.authors.find((author)=>author.id === parent.author_id)
+        } 
+    }
 }
 const server = new ApolloServer({
     typeDefs,
