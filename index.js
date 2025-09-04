@@ -73,6 +73,8 @@ const resolvers = {
                 }
             return game
             })
+            _db.games.find((game)=game.id === args.id)
+            //updated game found in the DB
         }
     }
 }
